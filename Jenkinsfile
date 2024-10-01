@@ -1,14 +1,18 @@
 pipeline {
-    agent {
-        docker {
-            image 'btjeon/jenkins-agent-python'
-            args '-u root --privileged'
-        }
-    } 
+    agent any
     stages {
+        stage('Setup') {
+           steps {
+               withPythonEnv('/usr/bin/python3') {
+               sh 'echo "Job is starting" '
+               }            
+           }
+        } 
         stage("Unit test") {
             steps {
-                sh "python3 test_calculator.py"
+                withPythonEnv('/usr/bin/python3') {
+                    sh "python3 test_calculator.py"
+                }
             }
         }
     }
