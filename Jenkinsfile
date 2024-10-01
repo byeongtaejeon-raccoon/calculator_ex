@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'btjeon/jenkins-agent-python'
+            args '-u root --privileged'
+        }
+    }
     stages {
         stage("Unit test") {
             steps {
